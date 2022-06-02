@@ -1,7 +1,13 @@
+import java.util.*
 import kotlin.math.PI
 import kotlin.math.pow
 
-class Box(var vol:Double){
+data class Box(var vol:Double){
+    var volume=vol
+        set(value){
+            if(value>0.0)
+                field=value
+        }
     var listForBox= mutableListOf<Shape>()
     fun add(shape: Shape):Boolean{
         return if (listForBox.size==0){
@@ -18,9 +24,6 @@ class Box(var vol:Double){
         }
     }
 }
-fun <T:Prism> print(prism: T){
-    println(prism.h1)
-}
 
 abstract class Shape(){
     abstract fun volume():Double
@@ -34,15 +37,11 @@ class Cercle(var r:Double):Shape(){
 
 abstract class CircleShape(r:Double,h:Double):Shape(){
 }
-
-class Cone(r:Double,h:Double):CircleShape(r,h){
-    var r=r
-    var h=h
+class Cone(var r:Double,var h:Double):CircleShape(r,h){
     override fun volume():Double{
         return  (1.0/3.0* PI *r.pow(2)*h)
     }
 }
-
 class Cylinder(r:Double,h:Double):CircleShape(r,h){
     var r=r
     var h=h
@@ -50,10 +49,8 @@ class Cylinder(r:Double,h:Double):CircleShape(r,h){
         return ( PI *r.pow(2)*h)
     }
 }
-
 abstract class Parallelepipeds(s:Double,h:Double):Shape(){
 }
-
 class Pyramid(s: Double,h: Double):Parallelepipeds(s,h){
     var s1=s
     var h1=h
@@ -61,7 +58,6 @@ class Pyramid(s: Double,h: Double):Parallelepipeds(s,h){
         return (1.0/3.0*s1*h1)
     }
 }
-
 class Prism(s: Double,h: Double):Parallelepipeds(s,h){
     var s1=s
     var h1=h
@@ -69,12 +65,7 @@ class Prism(s: Double,h: Double):Parallelepipeds(s,h){
         return (s1*h1)
     }
 }
-
 fun main() {
-    var box = Box(5.0)
+    var box = Box(6.0)
     println(box.add(Prism(1.0, 1.0)))
-    println(box.add(Prism(2.0, 1.0)))
-    println(box.add(Prism(2.0, 1.0)))
-    println(box.add(Prism(1.0, 1.0)))
-    print(Prism(12.0, 33.0))
 }
